@@ -19,7 +19,7 @@ public class RobotTruckSolver {
 		this.sumd = sumd;
 		this.npackages = npackages;
 		this.weight = weight;
-		this.dp = new int[10001];
+		this.dp = new int[100000+10];
 	}
 
 	public Point[] getPts() {

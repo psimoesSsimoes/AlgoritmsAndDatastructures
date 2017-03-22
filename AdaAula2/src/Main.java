@@ -16,7 +16,7 @@ public class Main {
 	private static int[] sumw;
 	private static int[] sumd;
 	private static Point a;
-
+	private static int MAX = 100000+10;
 	public static void main(String[] args) throws NumberFormatException, IOException {
 		// TODO Auto-generated method stub
 		BufferedReader buf = new BufferedReader(
@@ -30,8 +30,8 @@ public class Main {
 		p = new Point[10001];
 		Arrays.fill(p, new Point(0,0,0,0));
 		//fill position 0
-		sumw = new int[10001];
-		sumd = new int[10001];
+		sumw = new int[MAX];
+		sumd = new int[MAX];
 		for (int i = 1; i <= npackages; i++) {
 			StringTokenizer str = new StringTokenizer(buf.readLine());
 			a = new Point(); 
