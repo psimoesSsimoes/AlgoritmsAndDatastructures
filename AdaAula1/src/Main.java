@@ -46,8 +46,6 @@ static void number_of_bricks(int colums,int[] bricks,int[] ways){
 				for(int j = 0; j < bricks.length && i-bricks[j] >= 0; j++)
 					ways[i]+=ways[i-bricks[j]];
 			}
-
-		
 }
 
 
