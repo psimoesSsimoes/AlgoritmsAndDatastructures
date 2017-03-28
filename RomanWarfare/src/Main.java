@@ -23,11 +23,13 @@ public class Main {
 	public static int MAX_D = 10000 + 10;
 	public static int MAX_A_C = 4000 + 10;
 	public static int MAX_M_W = 10000 + 10;
-	static FakeTuple2[][] fakes;
+	//two-dimen for dist armie city
+	static int[][] dist;
+	
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-
+		final long startTime = System.nanoTime();
 		BufferedReader buf = new BufferedReader(
 				new InputStreamReader(System.in));
 
@@ -59,18 +61,19 @@ public class Main {
 
 		Arrays.sort(armies);
 		Arrays.sort(cities);
-		fakes = new FakeTuple2[nArmies + 1][nCities + 1];
+		dist = new int[nArmies + 1][nCities + 1];
 		for (int ct = 1; ct < cities.length; ct++) {
 			for (int ar = 1; ar < armies.length; ar++) {
-				fakes[ar][ct] = new FakeTuple2(dist(armies[ar], cities[ct]),
-						armies[ar].getM());
+				dist[ar][ct] = dist(armies[ar], cities[ct]);
 			}
 		}
+		printGrid(dist);
 		//print(computeColum(fakes,1).toString());
 		FakeTuple2[] f = new FakeTuple2[cities.length];
 		int totalD = Integer.MAX_VALUE, totalC = Integer.MAX_VALUE;
 		int arf=nArmies;
 		int ari=nArmies-nCities+1;
+		/**
 		while(ari>0){
 			f[nCities]=fakes[arf][nCities];
 			FakeTuple2[] result = computealldiagonals(fakes, f, ari,
@@ -92,7 +95,7 @@ public class Main {
 			arf--;
 			
 		}
-		
+		*/
 		
 		print(totalR+" "+totalD + " "+totalC);
 
@@ -136,13 +139,13 @@ public class Main {
 		System.out.println(x);
 	}
 
-	public static void printGrid(FakeTuple2[][] a) {
+	public static void printGrid(int[][] a) {
 		/**
 		 * int rows = matrix.length; int cols = matrix[0].length;
 		 */
 		for (int i = 1; i < a.length; i++) {
 			for (int j = 1; j < a[0].length; j++) {
-				System.out.print(a[i][j].toString() + " ");
+				System.out.print(a[i][j] + " ");
 			}
 			System.out.println();
 		}
