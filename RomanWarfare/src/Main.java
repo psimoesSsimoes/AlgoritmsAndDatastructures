@@ -66,7 +66,6 @@ public class Main {
 						armies[ar].getM());
 			}
 		}
-		printGrid(fakes);
 		//print(computeColum(fakes,1).toString());
 		FakeTuple2[] f = new FakeTuple2[cities.length];
 		int totalD = Integer.MAX_VALUE, totalC = Integer.MAX_VALUE;
@@ -91,7 +90,7 @@ public class Main {
 			}
 			ari--;
 			arf--;
-			f = new FakeTuple2[cities.length];
+			
 		}
 		
 		
