@@ -25,6 +25,8 @@ public class Main {
 	public static int MAX_M_W = 10000 + 10;
 	//two-dimen for dist armie city
 	static int[][] dist;
+	static FakeTuple[] cities;
+	static FakeTuple[] armies;
 	
 
 	public static void main(String[] args) throws IOException {
@@ -39,23 +41,23 @@ public class Main {
 		int nArmies = Integer.parseInt(ap.split(" ")[0]);
 		int nCities = Integer.parseInt(ap.split(" ")[1]);
 		
-		FakeTuple[] armies = new FakeTuple[nArmies + 1];
-		FakeTuple[] cities = new FakeTuple[nCities + 1];
-		armies[0] = new FakeTuple(0, 0, 0);
-		cities[0] = new FakeTuple(0, 0, 0);
+		armies = new FakeTuple[nArmies + 1];
+		cities = new FakeTuple[nCities + 1];
+		armies[0] = new FakeTuple(0, 0, 0,0);
+		cities[0] = new FakeTuple(0, 0, 0,0);
 
 		for (int i = 1; i < nArmies + 1; i++) {
 			String aA = buf.readLine();
 			String[] aAv = aA.split(" ");
 			armies[i] = new FakeTuple(Integer.parseInt(aAv[0]),
-					Integer.parseInt(aAv[1]), Integer.parseInt(aAv[2]));
+					Integer.parseInt(aAv[1]), Integer.parseInt(aAv[2]),0);
 		}
 		int totalR=0;
 		for (int j = 1; j < nCities + 1; j++) {
 			String aC = buf.readLine();
 			String[] aCv = aC.split(" ");
 			cities[j] = new FakeTuple(Integer.parseInt(aCv[0]),
-					Integer.parseInt(aCv[1]), Integer.parseInt(aCv[2]));
+					Integer.parseInt(aCv[1]), Integer.parseInt(aCv[2]),0);
 			totalR+=Integer.parseInt(aCv[2]);
 		}
 
@@ -69,22 +71,23 @@ public class Main {
 		}
 		printGrid(dist);
 		//print(computeColum(fakes,1).toString());
-		FakeTuple2[] f = new FakeTuple2[cities.length];
+		int[] indexes = new int[cities.length];
+		FakeTuple[] f = new FakeTuple[cities.length];
 		int totalD = Integer.MAX_VALUE, totalC = Integer.MAX_VALUE;
 		int arf=nArmies;
 		int ari=nArmies-nCities+1;
-		/**
+		
 		while(ari>0){
-			f[nCities]=fakes[arf][nCities];
-			FakeTuple2[] result = computealldiagonals(fakes, f, ari,
+			indexes[nCities]=dist[arf][nCities];
+			FakeTuple[] result = computealldiagonals(dist, f, ari,
 					arf, nCities-1);
 			
 			int tD=0,tC=0;
 			
 			//Arrays.toString(result);
 			for(int i =1;i<result.length;i++){
-				tD+=result[i].getD();
-				tC+=result[i].getC();
+				tD+=dist(result[i],cities[i]);
+				tC+=result[i].getM();
 			}
 			if(tD<=totalD){
 				totalD=tD;
@@ -95,39 +98,42 @@ public class Main {
 			arf--;
 			
 		}
-		*/
+		
 		
 		print(totalR+" "+totalD + " "+totalC);
 
 	}
 
-	private static FakeTuple2[] computealldiagonals(FakeTuple2[][] fakes,
-			FakeTuple2[] f, int ari, int arf, int ct) {
+	private static FakeTuple[] computealldiagonals(int[][] indexes,
+			FakeTuple[] f, int ari, int arf, int ct) {
 
 		if (ct == 0)
 			return f;
 		else {
-			f[ct] = computeColum(fakes,ari-1,arf-1, ct);
-			return computealldiagonals(fakes, f, ari, arf, ct - 1);
+			f[ct] = computeColum(indexes,ari-1,arf-1, ct);
+			return computealldiagonals(indexes, f, ari, arf, ct - 1);
 		}
 
 	}
 
-	public static FakeTuple2 computeColum(FakeTuple2[][] array,int ari,int arf, int colum) {
-		FakeTuple2 totalD = array[1][colum];
+	public static FakeTuple computeColum(int[][] array,int ari,int arf, int colum) {
+		int totalD = array[1][colum];
+		int x=1;
 		if(ari==0)
 			ari=1;
 		
 		for (int i = ari; i <=arf; i++) {
-			if (array[i][colum].getD() < totalD.getD()) {
+			if (array[i][colum] < totalD) {
 				totalD = array[i][colum];
-
-			} else if (array[i][colum].getD() == totalD.getD()
-					&& array[i][colum].getC() < totalD.getC()) {
+				x=i;
+			} else if (array[i][colum] == totalD
+					&& armies[i].getM() < armies[x].getM()) {
 				totalD = array[i][colum];
+				x=i;
 			}
 		}
-		return totalD;
+		
+		return armies[x];
 	}
 
 	private static int dist(FakeTuple a, FakeTuple c) {
