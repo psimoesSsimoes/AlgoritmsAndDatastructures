@@ -22,4 +22,5 @@ public class FakeTuple2 {
 	public String toString(){
 		return "("+c +","+d+")";
 	}
+	
 }
