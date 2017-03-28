@@ -36,8 +36,7 @@ public class Main {
 
 		int nArmies = Integer.parseInt(ap.split(" ")[0]);
 		int nCities = Integer.parseInt(ap.split(" ")[1]);
-		int loop = nArmies-nCities;
-		int loopC = loop;
+		
 		FakeTuple[] armies = new FakeTuple[nArmies + 1];
 		FakeTuple[] cities = new FakeTuple[nCities + 1];
 		armies[0] = new FakeTuple(0, 0, 0);
@@ -71,10 +70,11 @@ public class Main {
 		//print(computeColum(fakes,1).toString());
 		FakeTuple2[] f = new FakeTuple2[cities.length];
 		int totalD = Integer.MAX_VALUE, totalC = Integer.MAX_VALUE;
-		
-		while (loop>0) {
-			FakeTuple2[] result = computealldiagonals(fakes, f, loop,
-					loop+loopC, nCities);
+		int arf=nArmies;
+		int ari=nArmies-nCities;
+		do{
+			FakeTuple2[] result = computealldiagonals(fakes, f, ari,
+					arf, nCities);
 			
 			int tD=0,tC=0;
 			
@@ -88,8 +88,9 @@ public class Main {
 				if(tC<totalC)
 					totalC=tC;
 			}
-			loop--;
-		}
+			ari--;
+			arf--;
+		}while(ari>0);
 		
 		
 		print(totalR+" "+totalD + " "+totalC);
@@ -102,17 +103,18 @@ public class Main {
 		if (ct == 0)
 			return f;
 		else {
-			f[ct] = computeColum(fakes, ct);
+			f[ct] = computeColum(fakes,ari,arf, ct);
 			return computealldiagonals(fakes, f, ari - 1, arf - 1, ct - 1);
 		}
 
 	}
 
-	public static FakeTuple2 computeColum(FakeTuple2[][] array, int colum) {
+	public static FakeTuple2 computeColum(FakeTuple2[][] array,int ari,int arf, int colum) {
 		FakeTuple2 totalD = array[1][colum];
+		if (ari==0)
+			ari=1;
 		
-
-		for (int i = 2; i < array.length; i++) {
+		for (int i = ari; i <=arf; i++) {
 			if (array[i][colum].getD() < totalD.getD()) {
 				totalD = array[i][colum];
 
