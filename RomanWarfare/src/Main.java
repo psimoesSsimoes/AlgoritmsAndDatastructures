@@ -71,10 +71,11 @@ public class Main {
 		FakeTuple2[] f = new FakeTuple2[cities.length];
 		int totalD = Integer.MAX_VALUE, totalC = Integer.MAX_VALUE;
 		int arf=nArmies;
-		int ari=nArmies-nCities;
-		do{
+		int ari=nArmies-nCities+1;
+		while(ari>0){
+			f[nCities]=fakes[arf][nCities];
 			FakeTuple2[] result = computealldiagonals(fakes, f, ari,
-					arf, nCities);
+					arf, nCities-1);
 			
 			int tD=0,tC=0;
 			
@@ -90,7 +91,8 @@ public class Main {
 			}
 			ari--;
 			arf--;
-		}while(ari>0);
+			f = new FakeTuple2[cities.length];
+		}
 		
 		
 		print(totalR+" "+totalD + " "+totalC);
@@ -103,15 +105,15 @@ public class Main {
 		if (ct == 0)
 			return f;
 		else {
-			f[ct] = computeColum(fakes,ari,arf, ct);
-			return computealldiagonals(fakes, f, ari - 1, arf - 1, ct - 1);
+			f[ct] = computeColum(fakes,ari-1,arf-1, ct);
+			return computealldiagonals(fakes, f, ari, arf, ct - 1);
 		}
 
 	}
 
 	public static FakeTuple2 computeColum(FakeTuple2[][] array,int ari,int arf, int colum) {
 		FakeTuple2 totalD = array[1][colum];
-		if (ari==0)
+		if(ari==0)
 			ari=1;
 		
 		for (int i = ari; i <=arf; i++) {
