@@ -1,4 +1,5 @@
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -23,11 +24,13 @@ public class Main {
 	public static int MAX_D = 10000 + 10;
 	public static int MAX_A_C = 4000 + 10;
 	public static int MAX_M_W = 10000 + 10;
-	//two-dimen for dist armie city
+	// two-dimen for dist armie city
 	static int[][] dist;
 	static FakeTuple[] cities;
 	static FakeTuple[] armies;
-	
+	static int max_profit = 0;
+	static int[] ct_w;
+	private static final String FILENAME = "/home/psimoes/gitlab/ADA/romanTest3.txt";
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
@@ -36,109 +39,53 @@ public class Main {
 				new InputStreamReader(System.in));
 
 		// exercitos-populacao
-		String ap = buf.readLine();
+		BufferedReader br = null;
+		FileReader fr = null;
 
-		int nArmies = Integer.parseInt(ap.split(" ")[0]);
-		int nCities = Integer.parseInt(ap.split(" ")[1]);
-		
-		armies = new FakeTuple[nArmies + 1];
-		cities = new FakeTuple[nCities + 1];
-		armies[0] = new FakeTuple(0, 0, 0,0);
-		cities[0] = new FakeTuple(0, 0, 0,0);
+		try {
 
-		for (int i = 1; i < nArmies + 1; i++) {
-			String aA = buf.readLine();
-			String[] aAv = aA.split(" ");
-			armies[i] = new FakeTuple(Integer.parseInt(aAv[0]),
-					Integer.parseInt(aAv[1]), Integer.parseInt(aAv[2]),0);
-		}
-		int totalR=0;
-		for (int j = 1; j < nCities + 1; j++) {
-			String aC = buf.readLine();
-			String[] aCv = aC.split(" ");
-			cities[j] = new FakeTuple(Integer.parseInt(aCv[0]),
-					Integer.parseInt(aCv[1]), Integer.parseInt(aCv[2]),0);
-			totalR+=Integer.parseInt(aCv[2]);
-		}
+			fr = new FileReader(FILENAME);
+			br = new BufferedReader(fr);
 
-		Arrays.sort(armies);
-		Arrays.sort(cities);
-		dist = new int[nArmies + 1][nCities + 1];
-		for (int ct = 1; ct < cities.length; ct++) {
-			for (int ar = 1; ar < armies.length; ar++) {
-				dist[ar][ct] = dist(armies[ar], cities[ct]);
-			}
-		}
-		printGrid(dist);
-		//print(computeColum(fakes,1).toString());
-		int[] indexes = new int[cities.length];
-		FakeTuple[] f = new FakeTuple[cities.length];
-		int totalD = Integer.MAX_VALUE, totalC = Integer.MAX_VALUE;
-		int arf=nArmies;
-		int ari=nArmies-nCities+1;
-		
-		while(ari>0){
-			indexes[nCities]=dist[arf][nCities];
-			FakeTuple[] result = computealldiagonals(dist, f, ari,
-					arf, nCities-1);
 			
-			int tD=0,tC=0;
-			
-			//Arrays.toString(result);
-			for(int i =1;i<result.length;i++){
-				tD+=dist(result[i],cities[i]);
-				tC+=result[i].getM();
+
+			br = new BufferedReader(new FileReader(FILENAME));
+
+			String ap = br.readLine();
+
+			int nArmies = Integer.parseInt(ap.split(" ")[0]);
+			int nCities = Integer.parseInt(ap.split(" ")[1]);
+
+			// space for ct_w
+			ct_w = new int[nCities + 1];
+
+			for (int i = 1; i < nArmies + 1; i++) {
+				String aA = br.readLine();
+				String[] aAv = aA.split(" ");
+
 			}
-			if(tD<=totalD){
-				totalD=tD;
-				if(tC<totalC)
-					totalC=tC;
+			for (int j = 1; j < nCities + 1; j++) {
+				String aC = br.readLine();
+				String[] aCv = aC.split(" ");
+				ct_w[j] = Integer.parseInt(aCv[2]);
 			}
-			ari--;
-			arf--;
-			
-		}
-		
-		
-		print(totalR+" "+totalD + " "+totalC);
-
-	}
-
-	private static FakeTuple[] computealldiagonals(int[][] indexes,
-			FakeTuple[] f, int ari, int arf, int ct) {
-
-		if (ct == 0)
-			return f;
-		else {
-			f[ct] = computeColum(indexes,ari-1,arf-1, ct);
-			return computealldiagonals(indexes, f, ari, arf, ct - 1);
-		}
-
-	}
-
-	public static FakeTuple computeColum(int[][] array,int ari,int arf, int colum) {
-		int totalD = array[1][colum];
-		int x=1;
-		if(ari==0)
-			ari=1;
-		
-		for (int i = ari; i <=arf; i++) {
-			if (array[i][colum] < totalD) {
-				totalD = array[i][colum];
-				x=i;
-			} else if (array[i][colum] == totalD
-					&& armies[i].getM() < armies[x].getM()) {
-				totalD = array[i][colum];
-				x=i;
+			//sortArrays of ct_w and
+			Arrays.sort(ct_w);
+			// calculate max profit
+			if (nCities > nArmies) {
+				for (int i = nCities; i > nCities-nArmies; i--) {
+					max_profit += ct_w[i];
+				}
+			} else {
+				for (int i = 1; i <= nCities; i++) {
+					max_profit += ct_w[i];
+				}
 			}
-		}
-		
-		return armies[x];
-	}
 
-	private static int dist(FakeTuple a, FakeTuple c) {
-		// TODO Auto-generated method stub
-		return Math.abs(a.getX() - c.getX()) + Math.abs(a.getY() - c.getY());
+			print("max profit of:" + max_profit);
+		} catch (Exception e) {
+
+		}
 	}
 
 	public static void print(String x) {
