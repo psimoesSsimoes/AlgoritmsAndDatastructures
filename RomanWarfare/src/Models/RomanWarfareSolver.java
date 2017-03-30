@@ -1,5 +1,7 @@
 package Models;
 
+import java.util.Arrays;
+
 import Utils.Constants;
 
 public class RomanWarfareSolver {
@@ -18,14 +20,17 @@ public class RomanWarfareSolver {
 		this.nCities=nCities;
 	}
         public void solve(){
+        	Arrays.fill(grid[0], new El());
         	
            for (int i = 1; i <= nArmies ;i++){
-               for(int j = 1; j<nCities ; j++){
+        	   Arrays.fill(grid[i], new El());
+        	   for(int j = 1; j<=nCities ; j++){
             	   El nT = new El(grid[i-1][j-1].w + cities[j-1].first,grid[i-1][j-1].d + dist(i-1,j-1),grid[i-1][j-1].m +armies[i-1].first);
             	   if(grid[i-1][j].compareTo(nT))
-            		   grid[i][j]= grid[i-1][j];
-            	   else
             		   grid[i][j]=nT;
+            	   else
+            		   grid[i][j]= grid[i-1][j];
+            		   
             	   
                }
            } 
