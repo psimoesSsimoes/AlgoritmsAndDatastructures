@@ -2,15 +2,16 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Deque;
-import java.util.LinkedList;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.Comparator;
+import java.util.function.Function;
+import java.util.function.ToDoubleFunction;
+import java.util.function.ToIntFunction;
+import java.util.function.ToLongFunction;
 
-import Models.FakeTuple;
-import Models.FakeTuple2;
+import Models.RomanWarfareSolver;
+import Models.Tuple;
+import Utils.Constants;
 
 /**
  * 41839
@@ -21,20 +22,13 @@ import Models.FakeTuple2;
 
 public class Main {
 
-	public static int MAX_D = 10000 + 10;
-	public static int MAX_A_C = 4000 + 10;
-	public static int MAX_M_W = 10000 + 10;
-	// two-dimen for dist armie city
-	static int[][] dist;
-	static FakeTuple[] cities;
-	static FakeTuple[] armies;
-	static int max_profit = 0;
-	static int[] ct_w;
-	private static final String FILENAME = "/home/psimoes/gitlab/ADA/romanTest3.txt";
+	private static final String FILENAME = "/home/psimoes/gitlab/ADA/romanTest1.txt";
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
 		final long startTime = System.nanoTime();
+		Tuple<Integer, Tuple<Integer, Integer>>[] armies;
+		Tuple<Integer, Tuple<Integer, Integer>>[] cities;
 		BufferedReader buf = new BufferedReader(
 				new InputStreamReader(System.in));
 
@@ -47,44 +41,72 @@ public class Main {
 			fr = new FileReader(FILENAME);
 			br = new BufferedReader(fr);
 
-			
-
 			br = new BufferedReader(new FileReader(FILENAME));
 
 			String ap = br.readLine();
 
 			int nArmies = Integer.parseInt(ap.split(" ")[0]);
 			int nCities = Integer.parseInt(ap.split(" ")[1]);
+			armies = new Tuple[nArmies];
+			cities = new Tuple[nCities];
 
-			// space for ct_w
-			ct_w = new int[nCities + 1];
-
-			for (int i = 1; i < nArmies + 1; i++) {
+			for (int i = 0; i < nArmies; i++) {
 				String aA = br.readLine();
 				String[] aAv = aA.split(" ");
-
+				Tuple<Integer, Integer> coord = new Tuple<Integer, Integer>(
+						Integer.parseInt(aAv[0]), Integer.parseInt(aAv[1]));
+				Tuple<Integer, Tuple<Integer, Integer>> aG = new Tuple<Integer, Tuple<Integer, Integer>>(
+						Integer.parseInt(aAv[2]), coord);
+				armies[i] = aG;
 			}
-			for (int j = 1; j < nCities + 1; j++) {
+			for (int j = 0; j < nCities; j++) {
 				String aC = br.readLine();
 				String[] aCv = aC.split(" ");
-				ct_w[j] = Integer.parseInt(aCv[2]);
+				Tuple<Integer, Integer> coord = new Tuple<Integer, Integer>(
+						Integer.parseInt(aCv[0]), Integer.parseInt(aCv[1]));
+				Tuple<Integer, Tuple<Integer, Integer>> aG = new Tuple<Integer, Tuple<Integer, Integer>>(
+						Integer.parseInt(aCv[2]), coord);
+				cities[j] = aG;
 			}
-			//sortArrays of ct_w and
-			Arrays.sort(ct_w);
-			// calculate max profit
-			if (nCities > nArmies) {
-				for (int i = nCities; i > nCities-nArmies; i--) {
-					max_profit += ct_w[i];
+			
+			Arrays.sort(armies, new Comparator<Tuple<Integer,Tuple<Integer,Integer>>>(){
+				public int compare(Tuple<Integer,Tuple<Integer,Integer>> o1, Tuple<Integer,Tuple<Integer,Integer>> o2) {
+					if (o1 == null && o2 == null) {
+			            return 0;
+			        }
+			        if (o1 == null) {
+			            return 1;
+			        }
+			        if (o2 == null) {
+			            return -1;
+			        }
+			        return o1.first-o2.first;
 				}
-			} else {
-				for (int i = 1; i <= nCities; i++) {
-					max_profit += ct_w[i];
-				}
-			}
 
-			print("max profit of:" + max_profit);
+			});
+			
+			Arrays.sort(cities, new Comparator<Tuple<Integer,Tuple<Integer,Integer>>>(){
+				public int compare(Tuple<Integer,Tuple<Integer,Integer>> o1, Tuple<Integer,Tuple<Integer,Integer>> o2) {
+					if (o1 == null && o2 == null) {
+			            return 0;
+			        }
+			        if (o1 == null) {
+			            return 1;
+			        }
+			        if (o2 == null) {
+			            return -1;
+			        }
+			        return o1.first-o2.first;
+				}
+
+			});
+
+			RomanWarfareSolver slv = new RomanWarfareSolver(armies, cities,nArmies,nCities);
+			slv.solve();
+			// compute distances
+
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 	}
 
