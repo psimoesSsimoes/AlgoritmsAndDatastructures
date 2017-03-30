@@ -14,44 +14,46 @@ import Models.Tuple;
 import Utils.Constants;
 
 /**
- * 41839
  * 
- * @author psimoes
+ * 
+ * @author pedro simoes 41656 diogo rodrigues 41839
  * 
  */
 
 public class Main {
 
-	private static final String FILENAME = "/home/psimoes/gitlab/ADA/romanTest6.txt";
+	//private static final String FILENAME = "/home/psimoes/gitlab/ADA/romanTest5.txt";
 
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
-		final long startTime = System.nanoTime();
+		//final long startTime = System.nanoTime();
 		Tuple<Integer, Tuple<Integer, Integer>>[] armies;
 		Tuple<Integer, Tuple<Integer, Integer>>[] cities;
-		BufferedReader buf = new BufferedReader(
-				new InputStreamReader(System.in));
+		
 
 		// exercitos-populacao
-		BufferedReader br = null;
-		FileReader fr = null;
+		/**BufferedReader br = null;
+		FileReader fr = null;*/
 
 		try {
-
-			fr = new FileReader(FILENAME);
+			BufferedReader buf = new BufferedReader(
+					new InputStreamReader(System.in));
+		/**	fr = new FileReader(FILENAME);
 			br = new BufferedReader(fr);
 
-			br = new BufferedReader(new FileReader(FILENAME));
+			br = new BufferedReader(new FileReader(FILENAME));*/
 
-			String ap = br.readLine();
+			String ap = buf.readLine();
 
 			int nArmies = Integer.parseInt(ap.split(" ")[0]);
 			int nCities = Integer.parseInt(ap.split(" ")[1]);
+			
 			armies = new Tuple[nArmies];
 			cities = new Tuple[nCities];
 
 			for (int i = 0; i < nArmies; i++) {
-				String aA = br.readLine();
+				String aA = buf.readLine();
 				String[] aAv = aA.split(" ");
 				Tuple<Integer, Integer> coord = new Tuple<Integer, Integer>(
 						Integer.parseInt(aAv[0]), Integer.parseInt(aAv[1]));
@@ -60,7 +62,7 @@ public class Main {
 				armies[i] = aG;
 			}
 			for (int j = 0; j < nCities; j++) {
-				String aC = br.readLine();
+				String aC = buf.readLine();
 				String[] aCv = aC.split(" ");
 				Tuple<Integer, Integer> coord = new Tuple<Integer, Integer>(
 						Integer.parseInt(aCv[0]), Integer.parseInt(aCv[1]));
@@ -100,13 +102,13 @@ public class Main {
 				}
 
 			});
-			System.out.println(System.nanoTime() - startTime);
+			//System.out.println(System.nanoTime() - startTime);
 
 			RomanWarfareSolver slv = new RomanWarfareSolver(armies, cities,nArmies,nCities);
 			slv.solve();
-			// compute distances
-			final long duration = System.nanoTime() - startTime;
-			System.out.println(duration);
+			
+			//final long duration = System.nanoTime() - startTime;
+			//System.out.println(duration);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
