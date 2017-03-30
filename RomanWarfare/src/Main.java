@@ -22,7 +22,7 @@ import Utils.Constants;
 
 public class Main {
 
-	private static final String FILENAME = "/home/psimoes/gitlab/ADA/romanTest1.txt";
+	private static final String FILENAME = "/home/psimoes/gitlab/ADA/romanTest6.txt";
 
 	public static void main(String[] args) throws IOException {
 		// TODO Auto-generated method stub
@@ -100,11 +100,13 @@ public class Main {
 				}
 
 			});
+			System.out.println(System.nanoTime() - startTime);
 
 			RomanWarfareSolver slv = new RomanWarfareSolver(armies, cities,nArmies,nCities);
 			slv.solve();
 			// compute distances
-
+			final long duration = System.nanoTime() - startTime;
+			System.out.println(duration);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
