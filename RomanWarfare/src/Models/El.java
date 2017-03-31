@@ -12,6 +12,9 @@ public class El {
 		this.d=d;
 		this.m=m;
 	}
+	/**
+	 * Only if both El are not cities or armies: Compare the two El maximizing w,min distance and min m 
+	 */
 	public boolean compareTo(El e){
 		if(w!=e.w) return w<e.w;
 		if(d!=e.d) return d>e.d;

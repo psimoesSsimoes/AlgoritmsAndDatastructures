@@ -5,13 +5,15 @@ import java.util.Arrays;
 import Utils.Constants;
 
 public class RomanWarfareSolver {
-
+	
 	Tuple<Integer, Tuple<Integer, Integer>>[] armies;
 	Tuple<Integer, Tuple<Integer, Integer>>[] cities;
 	//El[][] grid;
-	// following teacher advice
+	// following teacher advice we have a matrix for wealth, distance, maintance
 	int[][] w, d, m;
+	// number of Armies
 	int nArmies;
+	// number of Cities
 	int nCities;
 
 	public RomanWarfareSolver(Tuple<Integer, Tuple<Integer, Integer>>[] armies,
@@ -25,7 +27,13 @@ public class RomanWarfareSolver {
 		d=new int[nArmies+1][nCities+1];
 		m=new int[nArmies+1][nCities+1];
 	}
-
+	/**
+	 * Armies and Cities ordered in Descending order
+	 * choose the best between not conquering city with armie ([i-1][j]) and city being conquered by armie ([i-1][j-1]).
+	 * That way we can fill the matrixes passing only one time for each position.
+	 * The wanted answer is in the last position of each matrix w,d,m
+	 * Time complexity  Θ(A*C)   
+	 */
 	public void solve() {
 		for (int i = 1; i <= nArmies; i++) {
 			for (int j = 1; j <= nCities; j++) {
@@ -46,6 +54,7 @@ public class RomanWarfareSolver {
 		}
 		System.out.println(w[nArmies][nCities] + " " + d[nArmies][nCities] + " " + m[nArmies][nCities]);
 	}
+	
 
 	public void printGrid(El[][] a) {
 		/**

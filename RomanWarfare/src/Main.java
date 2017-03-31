@@ -15,6 +15,15 @@ import Utils.Constants;
 
 /**
  * 
+ * Objetives: Max conquered Value
+ * 			  Min covered distance
+ * 			  in case of tie, min the cost
+ * 
+ * Premises : 2 armies with increasing cost can only attack cities with also incresing cost
+ * 			  if an armie has attacked certain city that cost < can only attack cities worth <
+ * 			  if an armie has attacked certain city taht cost > can only attack cities worth >
+ * 			  no armie or cities have the same location
+ * 			  positions of armies and cities in manhattan matter
  * 
  * @author pedro simoes 41656 diogo rodrigues 41839
  * 
@@ -22,27 +31,27 @@ import Utils.Constants;
 
 public class Main {
 
-	//private static final String FILENAME = "/home/psimoes/gitlab/ADA/romanTest5.txt";
+	
 
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws IOException {
-		// TODO Auto-generated method stub
-		//final long startTime = System.nanoTime();
+		
+		/**
+		 * an Array of Tuple armies. Each armie has the structure (m,(x,y))
+		 */
 		Tuple<Integer, Tuple<Integer, Integer>>[] armies;
+		/**
+		 * an Array of Tuple cities. Each citie has the structure (w,(x,y))
+		 */
 		Tuple<Integer, Tuple<Integer, Integer>>[] cities;
 		
 
-		// exercitos-populacao
-		/**BufferedReader br = null;
-		FileReader fr = null;*/
+		
 
 		try {
 			BufferedReader buf = new BufferedReader(
 					new InputStreamReader(System.in));
-		/**	fr = new FileReader(FILENAME);
-			br = new BufferedReader(fr);
-
-			br = new BufferedReader(new FileReader(FILENAME));*/
+		
 
 			String ap = buf.readLine();
 
@@ -51,7 +60,9 @@ public class Main {
 			
 			armies = new Tuple[nArmies];
 			cities = new Tuple[nCities];
-
+			/**
+			 * read values for armies
+			 */
 			for (int i = 0; i < nArmies; i++) {
 				String aA = buf.readLine();
 				String[] aAv = aA.split(" ");
@@ -61,6 +72,9 @@ public class Main {
 						Integer.parseInt(aAv[2]), coord);
 				armies[i] = aG;
 			}
+			/**
+			 * read values for cities
+			 */
 			for (int j = 0; j < nCities; j++) {
 				String aC = buf.readLine();
 				String[] aCv = aC.split(" ");
@@ -70,7 +84,10 @@ public class Main {
 						Integer.parseInt(aCv[2]), coord);
 				cities[j] = aG;
 			}
-			
+			/**
+			 * Order them based on the maintance value. Descending order
+			 * Time-Cost Θ(A)  
+			 */
 			Arrays.sort(armies, new Comparator<Tuple<Integer,Tuple<Integer,Integer>>>(){
 				public int compare(Tuple<Integer,Tuple<Integer,Integer>> o1, Tuple<Integer,Tuple<Integer,Integer>> o2) {
 					if (o1 == null && o2 == null) {
@@ -86,7 +103,10 @@ public class Main {
 				}
 
 			});
-			
+			/**
+			 * Order them based on the wealth value. Descending order
+			 * Time-Cost Θ(C)  
+			 */
 			Arrays.sort(cities, new Comparator<Tuple<Integer,Tuple<Integer,Integer>>>(){
 				public int compare(Tuple<Integer,Tuple<Integer,Integer>> o1, Tuple<Integer,Tuple<Integer,Integer>> o2) {
 					if (o1 == null && o2 == null) {
@@ -113,11 +133,14 @@ public class Main {
 			e.printStackTrace();
 		}
 	}
-
+	
 	public static void print(String x) {
 		System.out.println(x);
 	}
-
+	/**
+	 * given a grid of w or d or m prints that grid
+	 * @param a
+	 */
 	public static void printGrid(int[][] a) {
 		/**
 		 * int rows = matrix.length; int cols = matrix[0].length;
