@@ -28,11 +28,11 @@ public class RomanWarfareSolver {
 		m=new int[nArmies+1][nCities+1];
 	}
 	/**
-	 * Armies and Cities ordered in Descending order
+	 * Armies and Cities ordered in Ascending order
 	 * choose the best between not conquering city with armie ([i-1][j]) and city being conquered by armie ([i-1][j-1]).
 	 * That way we can fill the matrixes passing only one time for each position.
 	 * The wanted answer is in the last position of each matrix w,d,m
-	 * Time complexity  Θ(A*C)   
+	 * Time complexity  Theta(A*C)   
 	 */
 	public void solve() {
 		for (int i = 1; i <= nArmies; i++) {

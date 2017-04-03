@@ -85,8 +85,8 @@ public class Main {
 				cities[j] = aG;
 			}
 			/**
-			 * Order them based on the maintance value. Descending order
-			 * Time-Cost Θ(A)  
+			 * Order them based on the maintance value. Ascending order
+			 * Time-Cost Theta(A)  
 			 */
 			Arrays.sort(armies, new Comparator<Tuple<Integer,Tuple<Integer,Integer>>>(){
 				public int compare(Tuple<Integer,Tuple<Integer,Integer>> o1, Tuple<Integer,Tuple<Integer,Integer>> o2) {
@@ -104,8 +104,8 @@ public class Main {
 
 			});
 			/**
-			 * Order them based on the wealth value. Descending order
-			 * Time-Cost Θ(C)  
+			 * Order them based on the wealth value. Ascending order
+			 * Time-Cost Theta(C)  
 			 */
 			Arrays.sort(cities, new Comparator<Tuple<Integer,Tuple<Integer,Integer>>>(){
 				public int compare(Tuple<Integer,Tuple<Integer,Integer>> o1, Tuple<Integer,Tuple<Integer,Integer>> o2) {
