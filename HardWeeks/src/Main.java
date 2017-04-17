@@ -21,16 +21,19 @@ public class Main {
 		int p = Integer.parseInt(input[1]);
 		int l = Integer.parseInt(input[2]);
 		
+		int[][] adj_matrix = new int[t][t];
+		
+		
 		for(int i = 0 ; i< t ;i++){
 			String[] precedences = buf.readLine().split(" "); 
 			int ptask = Integer.parseInt(precedences[0]);
 			int atask = Integer.parseInt(precedences[0]);
+			adj_matrix[ptask][atask]=1;
 		}
 		
-		print(t);
-		print(p);
-		print(l);
-		
+		HardWeeksSolver slv = new HardWeeksSolver(adj_matrix);
+		slv.solve();
+		print(slv.answer());
 		
 		buf.close();
 
