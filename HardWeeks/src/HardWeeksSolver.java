@@ -27,6 +27,7 @@ public class HardWeeksSolver {
 			maxWeek = startingPoint.size();
 			nHardWeeks += 1;
 		}
+		
 		while (!startingPoint.isEmpty()) {
 			Queue<Integer> week = new LinkedList<Integer>();
 			while (!startingPoint.isEmpty()) {
