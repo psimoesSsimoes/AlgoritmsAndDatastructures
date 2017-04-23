@@ -9,7 +9,7 @@ public class HardWeeksSolver {
 	private int[] control;
 	private int limit;
 	private int maxWeek;
-	private int nHardWeeks=0;
+	private int nHardWeeks = 0;
 
 	public HardWeeksSolver(int[][] adj_matrix, int[] control, int l) {
 		this.matrix = adj_matrix;
@@ -27,30 +27,34 @@ public class HardWeeksSolver {
 			maxWeek = startingPoint.size();
 			nHardWeeks += 1;
 		}
-		
+
 		while (!startingPoint.isEmpty()) {
 			Queue<Integer> week = new LinkedList<Integer>();
 			while (!startingPoint.isEmpty()) {
 				int row = startingPoint.poll();
 				for (int j = 0; j < control.length; j++) {
-					if (matrix[row][j]==1 && control[j]<=1) {
-						if(!(control[j]==0))
+					if (matrix[row][j] == 1) {
+						if (control[j] <= 1) {
+							if (!(control[j] == 0))
+								control[j]--;
+							week.add(j);
+							
+						}else{
 							control[j]--;
-						week.add(j);
-						control[row]--;
+						}
 					}
 				}
 			}
-			if (week.size() > limit )
+			if (week.size() > limit)
 				nHardWeeks++;
 			if (maxWeek < week.size()) {
 				maxWeek = week.size();
 			}
-			
+
 			startingPoint.addAll(week);
-			
+
 		}
-		
+
 	}
 
 	private Queue<Integer> findBeginning() {
@@ -64,7 +68,7 @@ public class HardWeeksSolver {
 
 	public String answer() {
 		// TODO Auto-generated method stub
-		return maxWeek + " "+ nHardWeeks;
+		return maxWeek + " " + nHardWeeks;
 	}
 
 }

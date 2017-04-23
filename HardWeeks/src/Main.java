@@ -10,24 +10,16 @@ public class Main {
 	 * @param args
 	 * @throws IOException 
 	 */
-	private static final String FILENAME = "/root/gitlab/AlgoritmsAndDatastructures/HardWeeks/hardtest.txt";
+	
 	public static void main(String[] args) throws IOException {
 		
 		
 		
 		
+		BufferedReader br = new BufferedReader(
+				new InputStreamReader(System.in));		
 		
-		
-		BufferedReader br = null;
-		FileReader fr = null;
-
-		try {
-
-			fr = new FileReader(FILENAME);
-			br = new BufferedReader(fr);
-
-
-			br = new BufferedReader(new FileReader(FILENAME));
+	
 			String[] input = br.readLine().split(" ");
 			
 			int t = Integer.parseInt(input[0]);
@@ -42,53 +34,21 @@ public class Main {
 				String[] precedences = br.readLine().split(" "); 
 				int ptask = Integer.parseInt(precedences[0]);
 				int atask = Integer.parseInt(precedences[1]);
-				print(ptask + " " +atask);
 				adj_matrix[ptask][atask]=1;
 				control[atask]++;
 			}
-			printGrid(adj_matrix);
+			
 			HardWeeksSolver slv = new HardWeeksSolver(adj_matrix,control,l);
 			slv.solve();
 			print(slv.answer());
-			print("Finished!");
-		} catch (IOException e) {
+			
 
-			e.printStackTrace();
+		
+		
 
-		} finally {
-
-			try {
-
-				if (br != null)
-					br.close();
-
-				if (fr != null)
-					fr.close();
-
-			} catch (IOException ex) {
-
-				ex.printStackTrace();
-
-			}
-
-		}
 		
 		
-		
-		/**
-		
-		
-		
-		BufferedReader buf = new BufferedReader(
-				new InputStreamReader(System.in));
-		
-		String[] input = buf.readLine().split(" ");
-		*/
-		
-		
-		
-		
-		//buf.close();
+		br.close();
 
 	}
 	/**
