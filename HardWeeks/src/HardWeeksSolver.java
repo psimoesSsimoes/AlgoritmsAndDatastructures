@@ -56,7 +56,7 @@ public class HardWeeksSolver {
 		}
 
 	}
-
+	// beginning is control[i]==0
 	private Queue<Integer> findBeginning() {
 		Queue<Integer> q = new LinkedList<Integer>();
 		for (int i = 0; i < control.length; i++) {
