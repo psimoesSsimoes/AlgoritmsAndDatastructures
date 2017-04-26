@@ -4,7 +4,7 @@ import java.util.Queue;
 
 public class PromotionsSolver {
 
-	private int[] vis1, vis2, cnt1, cnt2 = new int[5001];
+	private int[] vis1 = new int[5001], vis2 = new int[5001], cnt1 = new int[5001], cnt2 = new int[5001];
 	private Map<Integer, Queue<Integer>> a1;
 	private Map<Integer, Queue<Integer>> a2;
 	private int n;
@@ -17,8 +17,14 @@ public class PromotionsSolver {
 			return;
 		vis1[x] = 1;
 		cnt1[x]++;
-		for (int i = 0; i < a1.get(x).size(); i++) {
-			dfs1(a1.get(x).poll());
+		try {
+			for (int i = 0; i < a1.get(x).size(); i++) {
+
+				dfs1(a1.get(x).poll());
+
+			}
+		} catch (Exception e) {
+			return;
 		}
 	}
 
@@ -27,10 +33,17 @@ public class PromotionsSolver {
 			return;
 		vis2[x] = 1;
 		cnt2[x]++;
-		for (int i = 0; i < a2.get(x).size(); i++) {
-			dfs2(a2.get(x).poll());
+		try {
+			for (int i = 0; i < a2.get(x).size(); i++) {
+
+				dfs2(a2.get(x).poll());
+			}
+		} catch (Exception e) {
+			return;
 		}
 	}
+
+	
 
 	public PromotionsSolver(Map<Integer, Queue<Integer>> a1, Map<Integer, Queue<Integer>> a2, int n, int a, int b) {
 		this.a1 = a1;

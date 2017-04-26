@@ -55,6 +55,7 @@ public class Main {
 			}
 
 			PromotionsSolver slv = new PromotionsSolver(a1, a2, N, A, B);
+			slv.solve();
 			System.out.println(slv.answer());
 
 		} catch (IOException e) {
