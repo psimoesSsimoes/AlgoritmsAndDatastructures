@@ -5,8 +5,8 @@ import java.util.Queue;
 public class LionLandSolver {
 
 	char[][][][] visited = new char[42][42][42][42];
-	Deque<State> Q = new LinkedList<State>();
-	Deque<Integer> DQ = new LinkedList<Integer>();
+	Queue<State> Q = new LinkedList<State>();
+	Queue<Integer> DQ = new LinkedList<Integer>();
 	private char[][] grid;
 	private int rows;
 	private int colums;
@@ -47,7 +47,7 @@ public class LionLandSolver {
 		while (!Q.isEmpty()) {
 			State u = Q.peek();
 			Integer d = new Integer(DQ.peek());
-			Q.pop();DQ.pop();
+			Q.poll();DQ.poll();
 			
 			for (int i = 0; i < 4; i++) {
 				
@@ -73,7 +73,7 @@ public class LionLandSolver {
 				if (visited[v.getLx()][v.getLy()][v.getGx()][v.getGy()]== 0) {
 					visited[v.getLx()][v.getLy()][v.getGx()][v.getGy()] = 1;
 					visited[v.getGx()][v.getGy()][v.getLx()][v.getLy()] = 1;
-					Q.push(v);DQ.push(d+1);
+					Q.add(v);DQ.add(d+1);
 				}
 				
 			}

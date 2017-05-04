@@ -14,7 +14,7 @@ public class Main {
 
 			String sCurrentLine;
 
-			br = new BufferedReader(new FileReader("/home/psimoes/test1.txt"));
+			br = new BufferedReader(new FileReader("/home/psimoes/test4.txt"));
 			
 			String[] r_c = br.readLine().split(" ");
 			int rows = Integer.parseInt(r_c[0]);
