@@ -20,7 +20,7 @@ public class Main {
 			int rows = Integer.parseInt(r_c[0]);
 			int colums = Integer.parseInt(r_c[1]);
 			String[] lv_n_s = br.readLine().split(" ");
-			for (int i = 1; i <= rows; i++){
+			for (int i = 0; i < rows; i++){
 				grid[i]=br.readLine().toCharArray();
 			}
 			LionLandSolver slv = new LionLandSolver(grid,rows,colums,lv_n_s);
@@ -60,7 +60,7 @@ public class Main {
 		/**
 		 * int rows = matrix.length; int cols = matrix[0].length;
 		 */
-		for (int i = 1; i <= rows; i++) {
+		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < colums; j++) {
 				System.out.print(a[i][j] + " ");
 			}

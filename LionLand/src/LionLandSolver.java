@@ -23,12 +23,12 @@ public class LionLandSolver {
 		this.grid = grid;
 		this.rows = rows;
 		this.colums = colums;
-		this.mx = Integer.parseInt(lv_n_s[0]);
-		this.my = Integer.parseInt(lv_n_s[1]);
-		this.gx = Integer.parseInt(lv_n_s[2]);
-		this.gy = Integer.parseInt(lv_n_s[3]);
-		this.lx = Integer.parseInt(lv_n_s[4]);
-		this.ly = Integer.parseInt(lv_n_s[5]);
+		this.mx = Integer.parseInt(lv_n_s[0])-1;
+		this.my = Integer.parseInt(lv_n_s[1])-1;
+		this.gx = Integer.parseInt(lv_n_s[2])-1;
+		this.gy = Integer.parseInt(lv_n_s[3])-1;
+		this.lx = Integer.parseInt(lv_n_s[4])-1;
+		this.ly = Integer.parseInt(lv_n_s[5])-1;
 	}
 
 	public String solution() {
@@ -46,25 +46,27 @@ public class LionLandSolver {
 			return 0;
 		while (!Q.isEmpty()) {
 			State u = Q.peek();
-			int d = DQ.peek();
+			int d = new Integer(DQ.peekFirst());
 			
 			Q.pop();DQ.pop();
 			
 			for (int i = 0; i < 4; i++) {
 				
-				State v = u;
+				//State v = u; this cannot be like this because you're copying object references
+				State v = new State(u.getLx(),u.getLy(),u.getGx(),u.getGy());
 				int tx, ty;
 				tx = v.getLx() + dx[i];ty = v.getLy() + dy[i];
 				
-				if (tx > 0 && ty > 0 && tx <= rows && ty <= colums
-						&& grid[tx][ty-1] == '.')
+				if (tx >= 0 && ty >= 0 && tx < rows && ty < colums && grid[tx][ty] == '.'){
 					v.setLx(tx); v.setLy(ty);
+					
+				}
 					
 				tx = v.getGx() + ox[i]; ty = v.getGy() + oy[i];
 				
-				if (tx > 0 && ty > 0 && tx <= rows && ty <= colums
-						&& grid[tx][ty-1] == '.')
+				if (tx >= 0 && ty >= 0 && tx < rows && ty < colums && grid[tx][ty] == '.'){
 					v.setGx(tx); v.setGy(ty);
+				}
 				
 				if (v.getLx() == v.getGx() && v.getLy() == v.getGy() && v.getLx() == mx && v.getLy() == my)
 					return d+1;
@@ -74,8 +76,12 @@ public class LionLandSolver {
 					visited[v.getGx()][v.getGy()][v.getLx()][v.getLy()] = 1;
 					Q.push(v);DQ.push(d+1);
 				}
+				
 			}
+			Q.peek();
+			
 		}
+		
 		return -1;
 	}
 }
