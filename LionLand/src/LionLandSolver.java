@@ -46,8 +46,7 @@ public class LionLandSolver {
 			return 0;
 		while (!Q.isEmpty()) {
 			State u = Q.peek();
-			int d = new Integer(DQ.peekFirst());
-			
+			Integer d = new Integer(DQ.peek());
 			Q.pop();DQ.pop();
 			
 			for (int i = 0; i < 4; i++) {

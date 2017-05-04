@@ -46,6 +46,6 @@ public class State {
 	}
 	
 	public String toString(){
-		return gx+" "+gy+" "+lx +" "+ly;
+		return lx +" "+ly+" "+gx+" "+gy;
 	}
 }
