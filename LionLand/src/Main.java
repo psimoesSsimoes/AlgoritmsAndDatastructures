@@ -12,9 +12,10 @@ public class Main {
 		char[][] grid = new char[42][50];
 		try {
 
-			String sCurrentLine;
+			
 
-			br = new BufferedReader(new FileReader("/home/psimoes/test4.txt"));
+			 br = new BufferedReader(
+					new InputStreamReader(System.in));
 			
 			String[] r_c = br.readLine().split(" ");
 			int rows = Integer.parseInt(r_c[0]);
@@ -25,7 +26,7 @@ public class Main {
 			}
 			LionLandSolver slv = new LionLandSolver(grid,rows,colums,lv_n_s);
 			print(slv.solution());
-			printGrid(grid,rows,colums);
+			//printGrid(grid,rows,colums);
 			
 			
 			
