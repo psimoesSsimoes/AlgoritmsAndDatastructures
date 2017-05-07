@@ -1,9 +1,12 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.AbstractMap;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.TreeMap;
+import java.util.Vector;
 
 public class Main {
 
@@ -14,31 +17,30 @@ public class Main {
 
 		BufferedReader br = null;
 		FileReader fr = null;
-		adj = new TreeMap<Integer, TreeMap<Integer, Integer>>();
-
+		Vector< Vector< AbstractMap.SimpleEntry<Integer,Integer> > > AdjList = new Vector< Vector< AbstractMap.SimpleEntry<Integer,Integer> > >();
 		try {
 
 			String sCurrentLine;
 
-			br = new BufferedReader(new FileReader("/home/psimoes/test4.txt"));
+			br = new BufferedReader(new FileReader("/home/psimoes/test.txt"));
 
 			String[] c_r = br.readLine().split(" ");
 			int communities = Integer.parseInt(c_r[0]);
 			int roads = Integer.parseInt(c_r[1]);
-			Queue<String[]> all_roads = new LinkedList<String[]>();
+			for (int j = 0; j < communities;j++){
+				Vector<SimpleEntry<Integer,Integer>> n = 
+						new Vector < SimpleEntry<Integer,Integer> >();
+				AdjList.add(n);
+			}
 			for (int i = 0; i < roads; i++) {
 				String[] r = br.readLine().split(" ");
-				if (!adj.containsKey(Integer.parseInt(r[0]))) {
-					TreeMap<Integer, Integer> t = new TreeMap<Integer, Integer>();
-					t.put(Integer.parseInt(r[1]), Integer.parseInt(r[2]));
-					adj.put(Integer.parseInt(r[0]), t);
-				}
-				else{
-					adj.get(Integer.parseInt(r[0])).put(Integer.parseInt(r[1]), Integer.parseInt(r[2]));
-				}
+				int o = Integer.parseInt(r[0]);
+				int a = Integer.parseInt(r[1]);
+				int w = Integer.parseInt(r[2]);
+				AdjList.get(o).add(new SimpleEntry<Integer,Integer>(a, w));
 			}
 			String[] capitals = br.readLine().split(" ");
-			ArSolver slv = new ArSolver(communities, roads, adj, capitals);
+			ArSolver slv = new ArSolver(communities, roads, AdjList, capitals);
 			slv.solve();
 			System.out.println(slv.getAnswer());
 			
