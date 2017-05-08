@@ -20,7 +20,7 @@ public class ArSolver {
 	private Vector<Vector<SimpleEntry<Integer, Integer>>> adj;
 	private int c1;
 	private int c2;
-
+	int[] sol=new int[3];
 	public ArSolver(int communities, int roads, Vector<Vector<SimpleEntry<Integer, Integer>>> adjList,
 			String[] capitals) {
 		this.c = communities;
@@ -33,12 +33,27 @@ public class ArSolver {
 	public void solve() {
 		Vector<Integer> dist_c1 = dijkstra(c1);
 		Vector<Integer> dist_c2 = dijkstra(c2);
-		System.out.println("atum");
+		for(int i = 0; i< dist_c1.size(); i++){
+			if(dist_c1.get(i) < dist_c2.get(i)){
+				sol[0]++;
+			}
+			if(dist_c1.get(i)==dist_c2.get(i) && dist_c2.get(i)!=INF){
+				sol[2]++;
+			}
+			if(dist_c1.get(i) > dist_c2.get(i))
+				sol[1]++;
+			
+			
+		}
 	}
-
+	
+	public String solution(){
+		return sol[0]+" "+sol[1]+ " "+sol[2];
+	}
+	
 	public Vector<Integer> dijkstra(int s) {
 		Vector<Integer> dist = new Vector<Integer>();
-		dist.addAll(Collections.nCopies(-1, INF));
+		dist.addAll(Collections.nCopies(r, INF));
 		dist.set(s, 0); // INF = 1*10^9 not MAX_INT to avoid overflow
 		PriorityQueue<SimpleEntry<Integer, Integer>> pq = new PriorityQueue<SimpleEntry<Integer, Integer>>(1,
 				new Comparator<SimpleEntry<Integer, Integer>>() { 

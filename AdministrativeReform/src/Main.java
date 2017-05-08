@@ -22,12 +22,12 @@ public class Main {
 
 			String sCurrentLine;
 
-			br = new BufferedReader(new FileReader("/home/psimoes/test.txt"));
+			br = new BufferedReader(new FileReader("/home/psimoes/test2.txt"));
 
 			String[] c_r = br.readLine().split(" ");
 			int communities = Integer.parseInt(c_r[0]);
 			int roads = Integer.parseInt(c_r[1]);
-			for (int j = 0; j < communities;j++){
+			for (int j = 0; j < communities*2;j++){
 				Vector<SimpleEntry<Integer,Integer>> n = 
 						new Vector < SimpleEntry<Integer,Integer> >();
 				AdjList.add(n);
@@ -38,11 +38,12 @@ public class Main {
 				int a = Integer.parseInt(r[1]);
 				int w = Integer.parseInt(r[2]);
 				AdjList.get(o).add(new SimpleEntry<Integer,Integer>(a, w));
+				AdjList.get(a).add(new SimpleEntry<Integer,Integer>(o, w));
 			}
 			String[] capitals = br.readLine().split(" ");
 			ArSolver slv = new ArSolver(communities, roads, AdjList, capitals);
 			slv.solve();
-			System.out.println(slv.getAnswer());
+			System.out.println(slv.solution());
 			
 			
 			
