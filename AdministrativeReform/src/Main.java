@@ -11,7 +11,7 @@ import java.util.Vector;
 
 public class Main {
 
-	private static TreeMap<Integer, TreeMap<Integer, Integer>> adj;
+	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -21,7 +21,7 @@ public class Main {
 		Vector< Vector< AbstractMap.SimpleEntry<Integer,Integer> > > AdjList = new Vector< Vector< AbstractMap.SimpleEntry<Integer,Integer> > >();
 		try {
 
-			String sCurrentLine;
+	
 
 			br = new BufferedReader(new InputStreamReader(System.in));
 

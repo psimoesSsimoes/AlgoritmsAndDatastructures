@@ -1,4 +1,4 @@
-import java.util.AbstractMap;
+
 import java.util.AbstractMap.SimpleEntry;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,7 +14,7 @@ import java.util.Vector;
 
 public class ArSolver {
 
-	private int INF = 1000000000;
+	private int INF = Integer.MAX_VALUE;
 	private int c;
 	private int r;
 	private Vector<Vector<SimpleEntry<Integer, Integer>>> adj;
@@ -33,7 +33,7 @@ public class ArSolver {
 	public void solve() {
 		Vector<Integer> dist_c1 = dijkstra(c1);
 		Vector<Integer> dist_c2 = dijkstra(c2);
-		for(int i = 0; i< dist_c1.size(); i++){
+		for(int i = 0; i< c; i++){
 			if(dist_c1.get(i) < dist_c2.get(i)){
 				sol[0]++;
 			}
@@ -53,7 +53,7 @@ public class ArSolver {
 	
 	public Vector<Integer> dijkstra(int s) {
 		Vector<Integer> dist = new Vector<Integer>();
-		dist.addAll(Collections.nCopies(r, INF));
+		dist.addAll(Collections.nCopies(r+1, INF));
 		dist.set(s, 0); // INF = 1*10^9 not MAX_INT to avoid overflow
 		PriorityQueue<SimpleEntry<Integer, Integer>> pq = new PriorityQueue<SimpleEntry<Integer, Integer>>(1,
 				new Comparator<SimpleEntry<Integer, Integer>>() { 
@@ -62,6 +62,7 @@ public class ArSolver {
 					}
 				});
 		pq.offer(new SimpleEntry<Integer,Integer>(0,s));//sorts based on increasing distance
+		
 		while(!pq.isEmpty()){
 			SimpleEntry<Integer,Integer> top = pq.poll();
 			int d = top.getKey(),u=top.getValue();
