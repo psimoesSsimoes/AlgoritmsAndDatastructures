@@ -1,6 +1,7 @@
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.AbstractMap;
 import java.util.AbstractMap.SimpleEntry;
 import java.util.LinkedList;
@@ -22,7 +23,7 @@ public class Main {
 
 			String sCurrentLine;
 
-			br = new BufferedReader(new FileReader("/home/psimoes/test2.txt"));
+			br = new BufferedReader(new InputStreamReader(System.in));
 
 			String[] c_r = br.readLine().split(" ");
 			int communities = Integer.parseInt(c_r[0]);
